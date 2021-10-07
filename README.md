@@ -1,12 +1,18 @@
 # web-cc Docker build
 
-## Build and use the container locally
+## Build and use the container locally (using Intel architecture)
 
 _This section assumes you have Docker installed and running on your machine.
-(See <https://docs.docker.com/get-docker/>)._
+(See <https://docs.docker.com/get-docker/>.) These build instructions should
+work if the image is built on an Intel-architecture computer. If the image is
+built on an M1 (Apple Silicon) Mac, the instructions in the deployment section
+below will fail because the Digital Ocean droplet referred to there uses the
+Intel architecture._
+
 
 ```bash
 # Build the Docker image.
+cp Dockerfile.intel Dockerfile
 docker build \
     -t web-cc:latest \ # Name your image to access it later locally.
     .
@@ -50,6 +56,36 @@ docker stop web-cc
 # The website goes offline when the container is stopped.
 
 ```
+
+## Build and use a Docker image supporting Intel and ARM architectures
+
+_See <www.docker.com/blog/multi-arch-images/>,
+<https://docs.docker.com/desktop/mac/apple-silicon/>,
+<https://www.docker.com/blog/multi-arch-build-and-images-the-simple-way/>, and
+<https://docs.docker.com/desktop/multi-arch/>. Note that M1 (Apple Silcion)
+Macs use the ARM architecture._
+
+```bash
+# The following uses the procedure described at
+# <https://docs.docker.com/desktop/multi-arch/>.
+docker buildx create --name web-cc-builder
+docker buildx use web-cc-builder
+docker buildx inspect --bootstrap
+
+# Build the image. Replace 'username' with your Docker username.
+cp Dockerfile.multi Dockerfile
+docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t username/demo:latest --push .
+
+# Inspect the image.
+docker buildx imagetools inspect username/demo:latest
+
+# Run the container locally to show it works on more than one architecture.
+# The long words hexadecimal numbers here are example SHA tags of the 
+# image variants. The next command should print one architecture.
+docker run --rm docker.io/username/demo:latest@sha256:2b77acdfea5dc5baa489ffab2a0b4a387666d1d526490e31845eb64e3e73ed20 uname -m
+# The next command should print a different architecture.
+docker run --rm docker.io/username/demo:latest@sha256:723c22f366ae44e419d12706453a544ae92711ae52f510e226f6467d8228d191 uname -m
+
 
 ## Publish the image on a registry
 
@@ -100,7 +136,9 @@ docker push $DOCKERHUB_USERNAME/web-cc:latest
 
 ## Deploy the container on a Digital Ocean droplet
 
-_This section assumes that the DO Droplet is already shipped with Docker, but you can also create a Docker droplet using a Docker image from the marketplace._
+_This section assumes that the Digital Ocean Droplet is already shipped with
+Docker, but you can also create a Docker droplet using a Docker image from the
+Digital Ocean marketplace._
 
 ### Setup SSH communication between your machine and the droplet
 
@@ -116,7 +154,7 @@ To properly set up SSH communication, refer to the following resources on Digita
 
 _Tip: when you enter a remote machine from your terminal you should see a difference in the header of the CLI commands (eg: `gmarraff@localmachine:` -> `root@remotemachine:`). This will give confirmation that you actually entered the remote machine._
 
-### First deployment
+### First deployment (Intel architecture example)
 
 ```bash
 DROPLET_IP="ip of your droplet"
