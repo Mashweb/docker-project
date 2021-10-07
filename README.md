@@ -55,7 +55,7 @@ docker stop web-cc
 
 Unfortunately it is not possible to just copy a Docker image to a remote location; you need an intermediary called
 a registry. If you have the image locally, you can easily push it to a registry and then pull it from the remote location.
-For the sake of simplicity, we can use the Docker Hub registry instead of running our own registry, which allows us to create one 
+For the sake of simplicity, we can use the Docker Hub registry instead of running our own registry, which allows us to create one
 private repository with Docker Hub's free account.
 
 ### Create Docker Hub account
@@ -131,7 +131,7 @@ ssh $DROPLET_USERNAME@$DROPLET_IP
 
 # Login to Docker Hub. It is required to have permissions to
 # pull the image.
-docker login -u $DOCKERHUB_USERNAME -p $ACCESS_TOKEN 
+docker login -u $DOCKERHUB_USERNAME -p $ACCESS_TOKEN
 
 # Run the container.
 # We run it without the --rm flag so that if the container
@@ -149,7 +149,7 @@ exit
 # SSH into the droplet.
 ssh $DROPLET_USERNAME@$DROPLET_IP
 
-# Pull the image from the server. This will download the
+# Pull the image from the registry. This will download the
 # image from the registry and make it accessible from the
 # Docker daemon. The first thing we do is the pull because
 # it is a network operation and might take some time, and
@@ -161,9 +161,9 @@ docker run --name web-cc -p 8080:80 -d \
     $DOCKERHUB_USERNAME/web-cc:latest
 
 # If the last command fails it will print information in
-# the logs. To rollback to a working status we just need
-# to "docker run" with the previous tag. (In production we
-# shouldn't use the latest tag.)
+# the CLI output. To rollback to a working status we just
+# need to "docker run" with the previous tag. (In
+# production we shouldn't use the latest tag.)
 
 # Exit the droplet
 exit
