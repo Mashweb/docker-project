@@ -149,7 +149,7 @@ exit
 # SSH into the droplet.
 ssh $DROPLET_USERNAME@$DROPLET_IP
 
-# Pull the image from the server. This will download the
+# Pull the image from the registry. This will download the
 # image from the registry and make it accessible from the
 # Docker daemon. The first thing we do is the pull because
 # it is a network operation and might take some time, and
@@ -161,9 +161,9 @@ docker run --name web-cc -p 8080:80 -d \
     $DOCKERHUB_USERNAME/web-cc:latest
 
 # If the last command fails it will print information in
-# the logs. To rollback to a working status we just need
-# to "docker run" with the previous tag. (In production we
-# shouldn't use the latest tag.)
+# the CLI output. To rollback to a working status we just
+# need to "docker run" with the previous tag. (In 
+# production we shouldn't use the latest tag.)
 
 # Exit the droplet
 exit
