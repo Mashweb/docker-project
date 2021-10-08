@@ -80,12 +80,12 @@ docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t username/
 docker buildx imagetools inspect username/demo:latest
 
 # Run the container locally to show it works on more than one architecture.
-# The long words hexadecimal numbers here are example SHA tags of the 
+# The long words hexadecimal numbers here are example SHA tags of the
 # image variants. The next command should print one architecture.
 docker run --rm docker.io/username/demo:latest@sha256:2b77acdfea5dc5baa489ffab2a0b4a387666d1d526490e31845eb64e3e73ed20 uname -m
 # The next command should print a different architecture.
 docker run --rm docker.io/username/demo:latest@sha256:723c22f366ae44e419d12706453a544ae92711ae52f510e226f6467d8228d191 uname -m
-
+```
 
 ## Publish the image on a registry
 
