@@ -262,8 +262,8 @@ docker images prune -a
 
 ## More Docker commands
 
-# docker rm      - remove a container
-# docker rmi     - remove an image
+docker rm      - remove a container
+docker rmi     - remove an image
 
 ## TODOs
 
