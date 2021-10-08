@@ -12,7 +12,6 @@ Intel architecture._
 
 ```bash
 # Build the Docker image.
-cp Dockerfile.intel Dockerfile
 docker build \
     -t web-cc:latest \ # Name your image to access it later locally.
     .
