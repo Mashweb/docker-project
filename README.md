@@ -261,7 +261,6 @@ docker images prune -a
 
 ## TODOs
 
-1. Set up the Digital Ocean droplet (SSH keys installation).
-2. Check how the traffic is directed on the docker container.
-3. Check with Thomas the current SSL setup.
-4. Define a script to reduce verbosity.
+1. Check how the traffic is directed on the docker container.
+2. Check with Thomas the current SSL setup.
+3. Define a script to reduce verbosity.
