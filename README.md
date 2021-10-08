@@ -3,18 +3,14 @@
 ## Build and use the container locally
 
 _This section assumes you have Docker installed and running on your machine.
-(See <https://docs.docker.com/get-docker/>.) These build instructions should
-work if the image is built on an Intel-architecture computer. If the image is
-built on an M1 (Apple Silicon) Mac, the instructions in the deployment section
-below will fail because the Digital Ocean droplet referred to there uses the
-Intel architecture._
+(See <https://docs.docker.com/get-docker/>)._
 
 
 ```bash
 # Build the Docker image.
-cp Dockerfile.intel Dockerfile
 docker build \
-    -t web-cc:latest \ # Name your image to access it later locally.
+    -t web-cc:latest \ # Name your image to access it later
+                     \ # locally.
     .
 
 # List the Docker images present on your computer. You should
@@ -119,6 +115,7 @@ following resources:
 - <https://www.docker.com/blog/multi-arch-images/>
 - <https://www.docker.com/blog/multi-arch-build-and-images-the-simple-way/>
 - <https://docs.docker.com/desktop/multi-arch/>
+- <https://docs.docker.com/desktop/mac/apple-silicon/>
 
 _Please note that `buildx` is automatically shipped with Docker versions >= 19, so you don't need to
 perform any additional installation steps._
@@ -129,12 +126,14 @@ perform any additional installation steps._
 # Create the multi-arch builder.
 docker buildx create --use --name multi-arch-builder
 
-# Get information from the current builder, you will see that currently, there
-# are no platforms available and the builder is inactive.
+# Get information from the current builder, you will see that
+# currently, there are no platforms available and the builder
+# is inactive.
 docker buildx inspect
 
-# Activate the builder and setup the platforms by appending the "--bootstrap" flag.
-# It will pull the "moby/buildkit:buildx-stable-1" and start a container with
+# Activate the builder and setup the platforms by appending the
+# "--bootstrap" flag. It will pull the
+# "moby/buildkit:buildx-stable-1" and start a container with
 # it. The container will be used to perform the multi-arch build.
 docker buildx inspect --bootstrap
 ```
