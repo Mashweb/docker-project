@@ -1,5 +1,8 @@
 # web-call.cc Docker build
 
+_NB: This README documents commands using lines up to 80 characters long.
+Please ensure that your viewing window does not truncate any of those lines._
+
 ## Build and use the container locally
 
 _This section assumes you have Docker installed and running on your machine.
@@ -10,7 +13,7 @@ _This section assumes you have Docker installed and running on your machine.
 # Build the Docker image.
 docker build \
     -t web-call.cc:latest \ # Name your image to access it later
-                     \ # locally.
+                          \ # locally.
     .
 
 # List the Docker images present on your computer. You should
@@ -18,21 +21,21 @@ docker build \
 docker images
 
 # Run your container.
-docker run        \
-    --rm          \ # Remove the container when stopped. This
-                  \ # helps to save space and make the command
-                  \ # idempotent.
+docker run             \
+    --rm               \ # Remove the container when stopped.
+                       \ # This helps to save space and make the
+                       \ # command idempotent.
     --name web-call.cc \ # Name of container so you can access it
-                  \ # later on.
-    -d            \ # Run the container in the background
-                  \ # (optional).
-    -p 8080:80    \ # Map port 80 of the container to port
-                  \ # 8080 of your machine. If the 8080 port
-                  \ # is busy, please use another one.
+                       \ # later on.
+    -d                 \ # Run the container in the background
+                       \ # (optional).
+    -p 8080:80         \ # Map port 80 of the container to port
+                       \ # 8080 of your machine. If the 8080 port
+                       \ # is busy, please use another one.
     web-call.cc:latest
 
-# List all the running containers. You should see the "web-call.cc"
-# container there.
+# List all the running containers. You should see the
+# "web-call.cc" container there.
 docker ps
 # List all containers, both running and stopped.
 docker ps -a
