@@ -17,10 +17,10 @@ RUN setcap 'cap_net_bind_service=+ep' /usr/local/apache2/bin/httpd
 
 USER www-data
 
-# We copy the "build" folder on our machine into the container htdocs.
+# We copy the "web_docs" folder on our machine into the container htdocs.
 # The default configuration of httpd looks for the htdocs in
 # /usr/local/apache2/htdocs/, so we don't need to do more.
-COPY ./build/ /usr/local/apache2/htdocs/
+COPY ./web_docs/ /usr/local/apache2/htdocs/
 
 # When starting the container, this image will start the httpd daemon,
 # this behaviour is inherited from the base image.

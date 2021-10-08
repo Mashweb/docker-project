@@ -1,4 +1,8 @@
-# web-call.cc Docker build
+# Quick How-to on Building, Publishing, and Deploying a Docker Project
+
+This how-to is a quick guide to setting up and maintaining Docker images,
+containers, and deployments using a VPS like Digital Ocean.
+The normal sequence is: build locally, run locally, publish, and deploy. 
 
 _NB: This README documents commands using lines up to 80 characters long.
 Please ensure that your viewing window does not truncate any of those lines._
@@ -87,7 +91,7 @@ private repository with Docker Hub's free account.
 ### Push the local image to Docker Hub
 
 ```bash
-DOCKERHUB_USERNAME="The name you registred with"
+DOCKERHUB_USERNAME="The name you registered with"
 ACCESS_TOKEN="The token saved before"
 
 # Login into Docker Hub. It is required to have permissions to
