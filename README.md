@@ -3,11 +3,7 @@
 ## Build and use the container locally
 
 _This section assumes you have Docker installed and running on your machine.
-(See <https://docs.docker.com/get-docker/>.) These build instructions should
-work if the image is built on an Intel-architecture computer. If the image is
-built on an M1 (Apple Silicon) Mac, the instructions in the deployment section
-below will fail because the Digital Ocean droplet referred to there uses the
-Intel architecture._
+(See <https://docs.docker.com/get-docker/>)._
 
 
 ```bash
