@@ -34,6 +34,8 @@ docker run        \
 # List all the running containers. You should see the "web-cc"
 # container there.
 docker ps
+# List all containers, both running and stopped.
+docker ps -a
 
 # Check the logs of your container (in this case httpd logs).
 docker logs -f web-cc
@@ -257,6 +259,11 @@ not currently used by a container.
 ```bash
 docker images prune -a
 ```
+
+## More Docker commands
+
+# docker rm      - remove a container
+# docker rmi     - remove an image
 
 ## TODOs
 
