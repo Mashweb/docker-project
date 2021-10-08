@@ -1,6 +1,6 @@
 # web-cc Docker build
 
-## Build and use the container locally (using Intel architecture)
+## Build and use the container locally
 
 _This section assumes you have Docker installed and running on your machine.
 (See <https://docs.docker.com/get-docker/>.) These build instructions should
@@ -57,36 +57,6 @@ docker stop web-cc
 
 ```
 
-## Build and use a Docker image supporting Intel and ARM architectures
-
-_See <www.docker.com/blog/multi-arch-images/>,
-<https://docs.docker.com/desktop/mac/apple-silicon/>,
-<https://www.docker.com/blog/multi-arch-build-and-images-the-simple-way/>, and
-<https://docs.docker.com/desktop/multi-arch/>. Note that M1 (Apple Silcion)
-Macs use the ARM architecture._
-
-```bash
-# The following uses the procedure described at
-# <https://docs.docker.com/desktop/multi-arch/>.
-docker buildx create --name web-cc-builder
-docker buildx use web-cc-builder
-docker buildx inspect --bootstrap
-
-# Build the image. Replace 'username' with your Docker username.
-cp Dockerfile.multi Dockerfile
-docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t username/demo:latest --push .
-
-# Inspect the image.
-docker buildx imagetools inspect username/demo:latest
-
-# Run the container locally to show it works on more than one architecture.
-# The long words hexadecimal numbers here are example SHA tags of the 
-# image variants. The next command should print one architecture.
-docker run --rm docker.io/username/demo:latest@sha256:2b77acdfea5dc5baa489ffab2a0b4a387666d1d526490e31845eb64e3e73ed20 uname -m
-# The next command should print a different architecture.
-docker run --rm docker.io/username/demo:latest@sha256:723c22f366ae44e419d12706453a544ae92711ae52f510e226f6467d8228d191 uname -m
-
-
 ## Publish the image on a registry
 
 Unfortunately it is not possible to just copy a Docker image to a remote location; you need an intermediary called
@@ -133,6 +103,75 @@ docker tag web-cc $DOCKERHUB_USERNAME/web-cc:latest
 # Push the image to Docker Hub.
 docker push $DOCKERHUB_USERNAME/web-cc:latest
 ```
+
+### Create and push a multi-arch image to Docker Hub
+
+This section instructs you to build a multi-architecture image and push it on Docker Hub.
+This is particularly useful when you perform your work a machine with a different architecture
+than `amd64` (eg: M1 ([Apple Silicon](https://docs.docker.com/desktop/mac/apple-silicon/)) Macs
+use the ARM architecture): since most of the servers in the cloud market are shipped with the
+`amd64` architecture, we need to ensure that the image we are creating is compatible with them.
+To do so we need to create a multi-architecture image that supports the `amd64` architecture, the
+preferred tools is `docker buildx`, for more information regarding `buildx`, please refer to the
+following resources:
+
+- <https://docs.docker.com/buildx/working-with-buildx/>
+- <https://www.docker.com/blog/multi-arch-images/>
+- <https://www.docker.com/blog/multi-arch-build-and-images-the-simple-way/>
+- <https://docs.docker.com/desktop/multi-arch/>
+
+_Please note that `buildx` is automatically shipped with Docker versions >= 19, so you don't need to
+perform any additional installation steps._
+
+#### Setup buildx to use create multi-arch builds
+
+```bash
+# Create the multi-arch builder.
+docker buildx create --use --name multi-arch-builder
+
+# Get information from the current builder, you will see that currently, there
+# are no platforms available and the builder is inactive.
+docker buildx inspect
+
+# Activate the builder and setup the platforms by appending the "--bootstrap" flag.
+# It will pull the "moby/buildkit:buildx-stable-1" and start a container with
+# it. The container will be used to perform the multi-arch build.
+docker buildx inspect --bootstrap
+```
+
+#### Create and push the image
+
+```bash
+DOCKERHUB_USERNAME="The name you registred with"
+ACCESS_TOKEN="The token saved before"
+
+# Login into Docker Hub. It is required to have permissions to
+# publish the image.
+docker login -u $DOCKERHUB_USERNAME -p $ACCESS_TOKEN
+
+# This login might print "WARNING! Using --password via the CLI
+# is insecure. Use --password-stdin."
+
+# Perform the multi-arch build, the --push flag will automatically
+# push the image to Docker Hub.
+docker buildx build \
+    --platform linux/amd64,linux/arm64      \
+    -t $DOCKERHUB_USERNAME/web-cc:latest    \
+    .                                       \
+    --push
+
+# Check that the image is shipped with multiple architectures
+docker buildx imagetools inspect $DOCKERHUB_USERNAME/web-cc:latest
+```
+
+Is it also possible to check that the image supports multiple architecture
+from the Docker Hub web page:
+
+1. Go to <https://hub.docker.com/>;
+2. Login to your account;
+3. Click on $DOCKERHUB_USERNAME/web-cc;
+4. Click on Tags in the topbar;
+5. You should see under the "OS/ARCH" field the multiple architectures.
 
 ## Deploy the container on a Digital Ocean droplet
 
@@ -222,7 +261,6 @@ docker images prune -a
 
 ## TODOs
 
-1. Set up the Digital Ocean droplet (SSH keys installation).
-2. Check how the traffic is directed on the docker container.
-3. Check with Thomas the current SSL setup.
-4. Define a script to reduce verbosity.
+1. Check how the traffic is directed on the docker container.
+2. Check with Thomas the current SSL setup.
+3. Define a script to reduce verbosity.
