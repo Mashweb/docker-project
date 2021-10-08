@@ -7,7 +7,7 @@ The normal sequence is: build locally, run locally, publish, and deploy.
 _NB: This README documents commands using lines up to 80 characters long.
 Please ensure that your viewing window does not truncate any of those lines._
 
-## Build and use the container locally
+## Build and use the image locally
 
 _This section assumes you have Docker installed and running on your machine.
 (See <https://docs.docker.com/get-docker/>)._
