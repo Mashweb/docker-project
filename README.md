@@ -114,6 +114,7 @@ following resources:
 - <https://www.docker.com/blog/multi-arch-images/>
 - <https://www.docker.com/blog/multi-arch-build-and-images-the-simple-way/>
 - <https://docs.docker.com/desktop/multi-arch/>
+- <https://docs.docker.com/desktop/mac/apple-silicon/>
 
 _Please note that `buildx` is automatically shipped with Docker versions >= 19, so you don't need to
 perform any additional installation steps._
