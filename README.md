@@ -9,7 +9,8 @@ _This section assumes you have Docker installed and running on your machine.
 ```bash
 # Build the Docker image.
 docker build \
-    -t web-cc:latest \ # Name your image to access it later locally.
+    -t web-cc:latest \ # Name your image to access it later
+                     \ # locally.
     .
 
 # List the Docker images present on your computer. You should
@@ -125,12 +126,14 @@ perform any additional installation steps._
 # Create the multi-arch builder.
 docker buildx create --use --name multi-arch-builder
 
-# Get information from the current builder, you will see that currently, there
-# are no platforms available and the builder is inactive.
+# Get information from the current builder, you will see that
+# currently, there are no platforms available and the builder
+# is inactive.
 docker buildx inspect
 
-# Activate the builder and setup the platforms by appending the "--bootstrap" flag.
-# It will pull the "moby/buildkit:buildx-stable-1" and start a container with
+# Activate the builder and setup the platforms by appending the
+# "--bootstrap" flag. It will pull the
+# "moby/buildkit:buildx-stable-1" and start a container with
 # it. The container will be used to perform the multi-arch build.
 docker buildx inspect --bootstrap
 ```
