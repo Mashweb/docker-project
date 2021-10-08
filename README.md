@@ -1,4 +1,4 @@
-# web-cc Docker build
+# web-call.cc Docker build
 
 ## Build and use the container locally
 
@@ -9,12 +9,12 @@ _This section assumes you have Docker installed and running on your machine.
 ```bash
 # Build the Docker image.
 docker build \
-    -t web-cc:latest \ # Name your image to access it later
+    -t web-call.cc:latest \ # Name your image to access it later
                      \ # locally.
     .
 
 # List the Docker images present on your computer. You should
-# see "web-cc" there.
+# see "web-call.cc" there.
 docker images
 
 # Run your container.
@@ -22,34 +22,34 @@ docker run        \
     --rm          \ # Remove the container when stopped. This
                   \ # helps to save space and make the command
                   \ # idempotent.
-    --name web-cc \ # Name of container so you can access it
+    --name web-call.cc \ # Name of container so you can access it
                   \ # later on.
     -d            \ # Run the container in the background
                   \ # (optional).
     -p 8080:80    \ # Map port 80 of the container to port
                   \ # 8080 of your machine. If the 8080 port
                   \ # is busy, please use another one.
-    web-cc:latest
+    web-call.cc:latest
 
-# List all the running containers. You should see the "web-cc"
+# List all the running containers. You should see the "web-call.cc"
 # container there.
 docker ps
 # List all containers, both running and stopped.
 docker ps -a
 
 # Check the logs of your container (in this case httpd logs).
-docker logs -f web-cc
+docker logs -f web-call.cc
 
 # You can now access the website at localhost:8080 .
 
 # Access your container.
 docker exec \
     -it \ # Attach the tty to allow interactive operations
-    web-cc \ # name of your container
+    web-call.cc \ # name of your container
     sh # The executable to run
 
 # Stop and remove the container.
-docker stop web-cc
+docker stop web-call.cc
 
 # The website goes offline when the container is stopped.
 
@@ -77,7 +77,7 @@ private repository with Docker Hub's free account.
 1. Go to <https://hub.docker.com/>;
 2. Login to your account;
 3. Click "Create Repository";
-4. Type "web-cc" as the name and "web-cc app" as the Description;
+4. Type "web-call.cc" as the name and "web-call.cc app" as the Description;
 5. Flag it as "Private";
 6. Click "Create"
 
@@ -96,10 +96,10 @@ docker login -u $DOCKERHUB_USERNAME -p $ACCESS_TOKEN
 
 # Tag the image by specifying the correct repository and
 # a useful tag (the hub.docker.com prefix is implicit).
-docker tag web-cc $DOCKERHUB_USERNAME/web-cc:latest
+docker tag web-call.cc $DOCKERHUB_USERNAME/web-call.cc:latest
 
 # Push the image to Docker Hub.
-docker push $DOCKERHUB_USERNAME/web-cc:latest
+docker push $DOCKERHUB_USERNAME/web-call.cc:latest
 ```
 
 ### Create and push a multi-arch image to Docker Hub
@@ -157,12 +157,12 @@ docker login -u $DOCKERHUB_USERNAME -p $ACCESS_TOKEN
 # push the image to Docker Hub.
 docker buildx build \
     --platform linux/amd64,linux/arm64      \
-    -t $DOCKERHUB_USERNAME/web-cc:latest    \
+    -t $DOCKERHUB_USERNAME/web-call.cc:latest    \
     .                                       \
     --push
 
 # Check that the image is shipped with multiple architectures
-docker buildx imagetools inspect $DOCKERHUB_USERNAME/web-cc:latest
+docker buildx imagetools inspect $DOCKERHUB_USERNAME/web-call.cc:latest
 ```
 
 Is it also possible to check that the image supports multiple architecture
@@ -170,7 +170,7 @@ from the Docker Hub web page:
 
 1. Go to <https://hub.docker.com/>;
 2. Login to your account;
-3. Click on $DOCKERHUB_USERNAME/web-cc;
+3. Click on $DOCKERHUB_USERNAME/web-call.cc;
 4. Click on Tags in the topbar;
 5. You should see under the "OS/ARCH" field the multiple architectures.
 
@@ -214,8 +214,8 @@ docker login -u $DOCKERHUB_USERNAME -p $ACCESS_TOKEN
 # Run the container.
 # We run it without the --rm flag so that if the container
 # crashes for any reason, we can always retrieve the logs.
-docker run --name web-cc -p 8080:80 -d \
-    $DOCKERHUB_USERNAME/web-cc:latest
+docker run --name web-call.cc -p 8080:80 -d \
+    $DOCKERHUB_USERNAME/web-call.cc:latest
 
 # Exit the droplet and return to your local machine.
 exit
@@ -232,11 +232,11 @@ ssh $DROPLET_USERNAME@$DROPLET_IP
 # Docker daemon. The first thing we do is the pull because
 # it is a network operation and might take some time, and
 # we want to minimize the downtime.
-docker pull $DOCKERHUB_USERNAME/web-cc:latest
-docker stop web-cc
-docker rm web-cc
-docker run --name web-cc -p 8080:80 -d \
-    $DOCKERHUB_USERNAME/web-cc:latest
+docker pull $DOCKERHUB_USERNAME/web-call.cc:latest
+docker stop web-call.cc
+docker rm web-call.cc
+docker run --name web-call.cc -p 8080:80 -d \
+    $DOCKERHUB_USERNAME/web-call.cc:latest
 
 # If the last command fails it will print information in
 # the CLI output. To rollback to a working status we just
