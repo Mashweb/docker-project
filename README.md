@@ -10,7 +10,7 @@ Please ensure that your viewing window does not truncate any of those lines._
 ## Build and use the image locally
 
 _This section assumes you have Docker installed and running on your machine.
-(See <https://docs.docker.com/get-docker/>)._
+(See <https://docs.docker.com/get-docker/>.)_
 
 
 ```bash
