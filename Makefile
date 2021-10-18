@@ -1,5 +1,3 @@
-#SHELL := /bin/bash
-
 # Image name
 IMAGE          ?= web-call.cc
 # Image tag
@@ -29,10 +27,10 @@ run:
 	docker run --rm --name $(CONT) -d -p $(CONT_PORT):80 $(IMAGE):$(TAG)
 
 stop:
-	@if ! docker stop $(CONT); then \
+	@if ! docker stop $(CONT); then       \
 		echo $(CONT) is not running.; \
-	else \
-		echo $(CONT) stopped.; \
+	else                                  \
+		echo $(CONT) stopped.;        \
 	fi;
 
 restart: stop run
@@ -42,19 +40,19 @@ publish:
 	docker push $(DHUB_UNAME)/$(IMAGE):$(TAG)
 
 publish_multi:
-	docker buildx build \
-	    --platform $(PLATFORMS) \
+	docker buildx build                            \
+	    --platform $(PLATFORMS)                    \
 	    -t $(DHUB_UNAME)/$(IMAGE):$(TAG) . --push
 
 deploy:
-	ssh $(DROPLET_UNAME)@$(DROPLET_IP) " \
-	  docker pull $(DHUB_UNAME)/$(IMAGE):$(TAG); \
-	  docker stop $(CONT); \
-	  echo Stopped container $(CONT); \
-	  docker rm $(CONT); \
-	  echo Removed container $(CONT); \
+	ssh $(DROPLET_UNAME)@$(DROPLET_IP) "           \
+	  docker pull $(DHUB_UNAME)/$(IMAGE):$(TAG);   \
+	  docker stop $(CONT);                         \
+	  echo Stopped container $(CONT);              \
+	  docker rm $(CONT);                           \
+	  echo Removed container $(CONT);              \
 	  docker run --name $(CONT) -p $(CONT_PORT):80 \
-	    -d $(DHUB_UNAME)/$(IMAGE):$(TAG); \
+	    -d $(DHUB_UNAME)/$(IMAGE):$(TAG);          \
 	  echo Started container $(CONT) with $(DHUB_UNAME)/$(IMAGE):$(TAG); \
 	"
 
