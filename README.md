@@ -71,22 +71,22 @@ private repository with Docker Hub's free account.
 
 ### Create Docker Hub account
 
-1. Go to <https://hub.docker.com/>;
-2. Signup using the form;
-3. Confirm the email;
-4. Click on your name on the top right of the page -> Account Settings;
-5. Click on "Security" -> Access Token -> New access token;
-6. Fill in the data and click "Generate";
+1. Go to <https://hub.docker.com/>.
+2. Signup using the form.
+3. Confirm the email.
+4. Click on your name on the top right of the page -> Account Settings.
+5. Click on "Security" -> Access Token -> New access token.
+6. Fill in the data and click "Generate".
 7. Copy the token and save it somewhere private and secure.
 
 ### Create a new image repository
 
-1. Go to <https://hub.docker.com/>;
-2. Login to your account;
-3. Click "Create Repository";
-4. Type "web-call.cc" as the name and "web-call.cc app" as the Description;
-5. Flag it as "Private";
-6. Click "Create"
+1. Go to <https://hub.docker.com/>.
+2. Login to your account.
+3. Click "Create Repository".
+4. Type "web-call.cc" as the name and "web-call.cc app" as the Description.
+5. Flag it as "Private".
+6. Click "Create".
 
 ### Push the local image to Docker Hub
 
