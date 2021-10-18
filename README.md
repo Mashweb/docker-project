@@ -1,7 +1,7 @@
 # Quick How-to on Building, Publishing, and Deploying a Docker Project
 
 This how-to is a quick guide to setting up and maintaining Docker images,
-containers, and deployments using a VPS like Digital Ocean.
+containers, and deployments on a VPS like Digital Ocean.
 The normal sequence is: build locally, run locally, publish, and deploy. 
 
 _NB: This README documents commands using lines up to 80 characters long.
