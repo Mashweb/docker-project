@@ -162,10 +162,10 @@ docker login -u $DOCKERHUB_USERNAME -p $ACCESS_TOKEN
 
 # Perform the multi-arch build. The --push flag will automatically
 # push the image to Docker Hub.
-docker buildx build \
-    --platform linux/amd64,linux/arm64      \
-    -t $DOCKERHUB_USERNAME/web-call.cc:latest    \
-    .                                       \
+docker buildx build                           \
+    --platform linux/amd64,linux/arm64        \
+    -t $DOCKERHUB_USERNAME/web-call.cc:latest \
+    .                                         \
     --push
 
 # Check that the image is shipped with multiple architectures
