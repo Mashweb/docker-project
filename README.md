@@ -2,7 +2,12 @@
 
 This how-to is a quick guide to setting up and maintaining Docker images,
 containers, and deployments on a VPS such as Digital Ocean.
-The normal sequence is: build locally, run locally, publish, and deploy. 
+The normal sequence is: build locally, run locally, publish, and deploy.
+For convenience, an accompanying makefile, along with the
+(make)[https://www.gnu.org/software/make/] command, automates the
+achievment of goals ("targets") corresponding to the above-mentioned
+normal sequence and a few other goals, such as listing and removing images
+and containers.
 
 _NB: This README documents commands using lines up to 80 characters long.
 Please ensure that your viewing window does not truncate any of those lines._
