@@ -15,7 +15,7 @@ _This section assumes you have Docker installed and running on your machine.
 
 ```bash
 # Build the Docker image.
-docker build \
+docker build              \
     -t web-call.cc:latest \ # Name your image to access it later
                           \ # locally.
     .
@@ -50,10 +50,10 @@ docker logs -f web-call.cc
 # You can now access the website at localhost:8080 .
 
 # Access your container.
-docker exec \
-    -it \ # Attach the tty to allow interactive operations
+docker exec     \
+    -it         \ # Attach the tty to allow interactive operations
     web-call.cc \ # name of your container
-    sh # The executable to run
+    sh            # The executable to run
 
 # Stop and remove the container.
 docker stop web-call.cc
