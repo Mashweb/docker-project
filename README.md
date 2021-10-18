@@ -113,12 +113,12 @@ docker push $DOCKERHUB_USERNAME/web-call.cc:latest
 
 This section instructs you to build a multi-architecture image and push it on Docker Hub.
 This is particularly useful when you perform your work a machine with a different architecture
-than `amd64` (eg: M1 ([Apple Silicon](https://docs.docker.com/desktop/mac/apple-silicon/)) Macs
-use the ARM architecture): since most of the servers in the cloud market are shipped with the
+than `amd64`, for example M1 ([Apple Silicon](https://docs.docker.com/desktop/mac/apple-silicon/)) Macs
+use the ARM64 architecture. Since most of the servers in the cloud market are shipped with the
 `amd64` architecture, we need to ensure that the image we are creating is compatible with them.
-To do so we need to create a multi-architecture image that supports the `amd64` architecture, the
-preferred tools is `docker buildx`, for more information regarding `buildx`, please refer to the
-following resources:
+To do so we need to create a multi-architecture image that supports the `amd64` architecture. The
+preferred tool to create this image is `docker buildx`. For more information on `buildx`,
+please refer to the following resources:
 
 - <https://docs.docker.com/buildx/working-with-buildx/>
 - <https://www.docker.com/blog/multi-arch-images/>
@@ -129,18 +129,18 @@ following resources:
 _Please note that `buildx` is automatically shipped with Docker versions >= 19, so you don't need to
 perform any additional installation steps._
 
-#### Setup buildx to use create multi-arch builds
+#### Set up buildx to create multi-arch builds
 
 ```bash
 # Create the multi-arch builder.
 docker buildx create --use --name multi-arch-builder
 
-# Get information from the current builder, you will see that
-# currently, there are no platforms available and the builder
-# is inactive.
+# Get information from the current builder. The first time you
+# inspect the builder, you will see that there are no platforms
+# available and the builder is inactive.
 docker buildx inspect
 
-# Activate the builder and setup the platforms by appending the
+# Activate the builder and set up the platforms by appending the
 # "--bootstrap" flag. It will pull the
 # "moby/buildkit:buildx-stable-1" and start a container with
 # it. The container will be used to perform the multi-arch build.
@@ -153,14 +153,14 @@ docker buildx inspect --bootstrap
 DOCKERHUB_USERNAME="The name you registred with"
 ACCESS_TOKEN="The token saved before"
 
-# Login into Docker Hub. It is required to have permissions to
+# Login to Docker Hub. It is required to have permissions to
 # publish the image.
 docker login -u $DOCKERHUB_USERNAME -p $ACCESS_TOKEN
 
-# This login might print "WARNING! Using --password via the CLI
-# is insecure. Use --password-stdin."
+# The login might print "WARNING! Using --password via the CLI
+# is insecure. In that case, use --password-stdin."
 
-# Perform the multi-arch build, the --push flag will automatically
+# Perform the multi-arch build. The --push flag will automatically
 # push the image to Docker Hub.
 docker buildx build \
     --platform linux/amd64,linux/arm64      \
@@ -172,13 +172,13 @@ docker buildx build \
 docker buildx imagetools inspect $DOCKERHUB_USERNAME/web-call.cc:latest
 ```
 
-Is it also possible to check that the image supports multiple architecture
+Is it also possible to check that the image supports multiple architectures
 from the Docker Hub web page:
 
-1. Go to <https://hub.docker.com/>;
-2. Login to your account;
-3. Click on $DOCKERHUB_USERNAME/web-call.cc;
-4. Click on Tags in the topbar;
+1. Go to <https://hub.docker.com/>.
+2. Login to your account.
+3. Click on $DOCKERHUB_USERNAME/web-call.cc.
+4. Click on Tags in the topbar.
 5. You should see under the "OS/ARCH" field the multiple architectures.
 
 ## Deploy the container on a Digital Ocean droplet
@@ -189,7 +189,7 @@ Digital Ocean marketplace._
 
 ### Setup SSH communication between your machine and the droplet
 
-_You need to do this procedure only once_.
+_You only need to do this procedure once._
 
 To connect to the droplet, we will use `SSH`. With this utility we can use the CLI of the droplet directly from our machine.
 To properly set up SSH communication, refer to the following resources on Digital Ocean:
@@ -199,7 +199,7 @@ To properly set up SSH communication, refer to the following resources on Digita
 3. [Enable your key on the droplet](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/to-existing-droplet/)
 4. [Test your connection](https://docs.digitalocean.com/products/droplets/how-to/connect-with-ssh/openssh/)
 
-_Tip: when you enter a remote machine from your terminal you should see a difference in the header of the CLI commands (eg: `gmarraff@localmachine:` -> `root@remotemachine:`). This will give confirmation that you actually entered the remote machine._
+_Tip: when you enter a remote machine from your terminal you should see a difference in the header of the CLI commands (e.g., `gmarraff@localmachine:` vs. `root@remotemachine:`). This will give confirmation that you actually entered the remote machine._
 
 ### First deployment (Intel architecture example)
 
@@ -248,17 +248,17 @@ docker run --name web-call.cc -p 8080:80 -d \
 # If the last command fails it will print information in
 # the CLI output. To rollback to a working status we just
 # need to "docker run" with the previous tag. (In
-# production we shouldn't use the latest tag.)
+# production we shouldn't use the "latest" tag.)
 
 # Exit the droplet
 exit
 ```
 
 _A Docker tag can always be overridden. It's usually a good practice to have a "latest" tag for every repository that is upgraded
-at every new release. Of course it is also best practice to number your release properly.
+at every new release. Of course it is also best practice to number releases properly.
 Every time you run `docker pull', it will check if the tag changed on the registry and download it again._
 
-## Cleanup unused Docker images
+## Clean up unused Docker images
 
 To avoid having the server fill up with unused Docker images, you can install a cron job that removes every image
 not currently used by a container.
